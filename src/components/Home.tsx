@@ -10,8 +10,15 @@ export const Home: FC = () => {
     setInputText(e.target.value);
   };
 
-  const handleSend = () => {
-    setText(inputText);
+  const handleSend = async () => {
+    const response = await fetch(`http://localhost:50021/audio_query?text=${inputText}&speaker=1`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    setText("Finished!");
     setInputText("");
   };
 
