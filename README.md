@@ -25,12 +25,11 @@
 
     ```json
     "scripts": {
-    "start": "npm run build && electron-forge start",
-    "package": "npm run build && electron-forge package",
-    "make": "npm run build && electron-forge make",
-    "publish": "npm run build && electron-forge publish",
-    "build": "tsc",
-    ...
+        "start": "npm run build && electron-forge start",
+        "package": "npm run build && electron-forge package",
+        "make": "npm run build && electron-forge make",
+        "publish": "npm run build && electron-forge publish",
+        "build": "tsc",
+        ...
     }
     ```
-# ore-zundamon
