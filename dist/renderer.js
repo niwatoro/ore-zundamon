@@ -1,3 +1,4 @@
+"use strict";
 /**
  * This file will automatically be loaded by webpack and run in the "renderer" context.
  * To learn more about the differences between the "main" and the "renderer" context in
@@ -25,6 +26,7 @@
  *  });
  * ```
  */
-
+Object.defineProperty(exports, "__esModule", { value: true });
 // Add this to the end of the existing file
-import "./app";
+require("./app");
+//# sourceMappingURL=renderer.js.map
