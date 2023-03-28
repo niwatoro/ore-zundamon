@@ -1,10 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const child_process_1 = require("child_process");
 const electron_1 = require("electron");
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
     electron_1.app.quit();
 }
+const startServer = () => {
+    (0, child_process_1.spawn)("npm", ["run", "start:server"], {
+        cwd: __dirname,
+        detached: true,
+        stdio: "ignore",
+    }).unref();
+};
 const createWindow = () => {
     // const isMac = process.platform === "darwin";
     // const isWindows = process.platform === "win32";
@@ -45,6 +53,7 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 electron_1.app.on("ready", () => {
+    startServer();
     createWindow();
 });
 // Quit when all windows are closed, except on macOS. There, it's common
