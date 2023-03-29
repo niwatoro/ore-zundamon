@@ -7,11 +7,34 @@ if (require("electron-squirrel-startup")) {
     electron_1.app.quit();
 }
 const startServer = () => {
-    (0, child_process_1.spawn)("npm", ["run", "start:server"], {
-        cwd: __dirname,
+    // "scripts": {
+    //   "start": "npm run build && electron-forge start",
+    //   "package": "npm run build && electron-forge package",
+    //   "make": "npm run build && electron-forge make",
+    //   "publish": "npm run build && electron-forge publish",
+    //   "build": "tsc",
+    //   "lint": "eslint --ext .ts,.tsx .",
+    //   "start:server": "cd voicevox && chmod +x run && xattr -cr run && xattr -r -d com.apple.quarantine * && ./run &"
+    // },
+    // resolve the following error:
+    // Uncaught Exception:
+    // Error: spawn npm ENOENT
+    // at ChildProcess._handle.onexit (node:internal/child_process:283:19)
+    // at onErrorNT (node:internal/child_process:476:16)
+    // at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+    const server = (0, child_process_1.spawn)("npm", ["run", "start:server"], {
+        shell: true,
         detached: true,
-        stdio: "ignore",
-    }).unref();
+    });
+    server.stdout.on("data", (data) => {
+        console.log(`stdout: ${data}`);
+    });
+    server.stderr.on("data", (data) => {
+        console.error(`stderr: ${data}`);
+    });
+    server.on("close", (code) => {
+        console.log(`child process exited with code ${code}`);
+    });
 };
 const createWindow = () => {
     // const isMac = process.platform === "darwin";
@@ -49,7 +72,7 @@ const createWindow = () => {
     // and load the index.html of the app.
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 };
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

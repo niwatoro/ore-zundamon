@@ -12,11 +12,19 @@ if (require("electron-squirrel-startup")) {
 }
 
 const startServer = () => {
-  spawn("npm", ["run", "start:server"], {
-    cwd: __dirname,
+  const server = spawn("npm", ["run", "start:server"], {
+    shell: true,
     detached: true,
-    stdio: "ignore",
-  }).unref();
+  });
+  server.stdout.on("data", (data) => {
+    console.log(`stdout: ${data}`);
+  });
+  server.stderr.on("data", (data) => {
+    console.error(`stderr: ${data}`);
+  });
+  server.on("close", (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
 };
 
 const createWindow = (): void => {
