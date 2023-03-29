@@ -1,4 +1,4 @@
-export const ZundamonSpeaker = async (text: string) => {
+export const ZundamonVoice = async (text: string) => {
   const response_query = await fetch(`http://localhost:50021/audio_query?text=${text}&speaker=1`, {
     method: "POST",
     headers: {
