@@ -16,12 +16,12 @@ export const ZundamonVoice = async (text: string) => {
   });
   const audioContext = new AudioContext();
   audioContext.decodeAudioData(await response_audio.arrayBuffer(), (buffer) => {
+    const gainNode = audioContext.createGain();
+    gainNode.gain.value = 5;
+    gainNode.connect(audioContext.destination);
     const source = audioContext.createBufferSource();
     source.buffer = buffer;
-    source.connect(audioContext.destination);
+    source.connect(gainNode);
     source.start();
-    source.onended = () => {
-      return;
-    };
   });
 };
