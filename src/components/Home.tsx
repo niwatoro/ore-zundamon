@@ -12,9 +12,10 @@ export const Home: FC = () => {
   };
 
   const handleSend = async () => {
-    const sentences = inputText.split("。");
+    const sentences = inputText.split(/、|。|！|？|！？|？！/);
     for (const sentence of sentences) {
       await ZundamonVoice(sentence);
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
     setInputText("");
   };
