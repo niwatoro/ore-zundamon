@@ -35,6 +35,7 @@ exports.Home = void 0;
 const react_1 = __importStar(require("react"));
 const normal_png_1 = __importDefault(require("../images/normal.png"));
 const send_svg_1 = __importDefault(require("../images/send.svg"));
+const ZundamonSpeaker_1 = require("./ZundamonSpeaker");
 const Home = () => {
     const [inputText, setInputText] = (0, react_1.useState)("");
     const [text, setText] = (0, react_1.useState)("ぼくはずんだもんなのだ。");
@@ -42,14 +43,10 @@ const Home = () => {
         setInputText(e.target.value);
     };
     const handleSend = () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield fetch(`http://localhost:50021/audio_query?text=${inputText}&speaker=1`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const data = yield response.json();
-        setText("Finished!");
+        const sentences = inputText.split("。");
+        for (const sentence of sentences) {
+            yield (0, ZundamonSpeaker_1.ZundamonSpeaker)(sentence);
+        }
         setInputText("");
     });
     return (react_1.default.createElement("div", { className: "w-screen h-screen overflow-hidden" },
