@@ -25,11 +25,10 @@ const ZundamonVoice = (text) => __awaiter(void 0, void 0, void 0, function* () {
         },
         body: JSON.stringify(data_query),
     });
-    // make the volume double
     const audioContext = new AudioContext();
     audioContext.decodeAudioData(yield response_audio.arrayBuffer(), (buffer) => {
         const gainNode = audioContext.createGain();
-        gainNode.gain.value = 2;
+        gainNode.gain.value = 5;
         gainNode.connect(audioContext.destination);
         const source = audioContext.createBufferSource();
         source.buffer = buffer;

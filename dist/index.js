@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const child_process_1 = require("child_process");
 const electron_1 = require("electron");
@@ -6,6 +15,20 @@ const electron_1 = require("electron");
 if (require("electron-squirrel-startup")) {
     electron_1.app.quit();
 }
+const getScreenText = () => __awaiter(void 0, void 0, void 0, function* () {
+    const sources = yield electron_1.desktopCapturer.getSources({ types: ["screen"] });
+    const source = sources[0];
+    // const worker = await createWorker({
+    //   logger: (m) => console.log(m),
+    // });
+    // worker.load();
+    // worker.loadLanguage("eng");
+    // worker.initialize("eng");
+    // const result = await worker.recognize(source.thumbnail.toDataURL());
+    // const data = result.data;
+    // return data.text;
+    return "";
+});
 const startServer = () => {
     const server = (0, child_process_1.spawn)("npm", ["run", "start:server"], {
         shell: true,
@@ -49,9 +72,6 @@ const createWindow = () => {
         skipTaskbar: true,
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-            nodeIntegration: true,
-            contextIsolation: false,
-            webSecurity: true,
         },
     });
     // and load the index.html of the app.
@@ -62,10 +82,11 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-electron_1.app.on("ready", () => {
+electron_1.app.on("ready", () => __awaiter(void 0, void 0, void 0, function* () {
     startServer();
+    electron_1.ipcMain.handle("get-screen-text", getScreenText);
     createWindow();
-});
+}));
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.

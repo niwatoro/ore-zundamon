@@ -43,6 +43,8 @@ const Home = () => {
         setInputText(e.target.value);
     };
     const handleSend = () => __awaiter(void 0, void 0, void 0, function* () {
+        const screenText = yield window.myAPI.getScreenText();
+        setZundamonText(screenText);
         const sentences = inputText.split(/、|。|！|？|！？|？！/);
         for (const sentence of sentences) {
             yield (0, ZundamonVoice_1.ZundamonVoice)(sentence);
@@ -54,10 +56,10 @@ const Home = () => {
         react_1.default.createElement("div", { className: "flex justify-end w-full h-full absolute -z-10" },
             react_1.default.createElement("img", { className: "object-contain", src: normal_png_1.default, alt: "zundamon" })),
         react_1.default.createElement("div", { className: "h-full flex flex-col justify-end w-full" },
-            react_1.default.createElement("div", { className: "flex items-center h-12 bg-white rounded-md m-3 mb-2 p-2 border-2 border-gray-300" }, zundamonText),
+            react_1.default.createElement("div", { id: "zundamon-text", className: "flex items-center h-12 bg-white rounded-md m-3 mb-2 p-2 border-2 border-gray-300" }, zundamonText),
             react_1.default.createElement("div", { className: "flex items-center h-12 bg-white rounded-md m-3 mt-0 p-2 border-2 border-gray-300 shadow-md" },
-                react_1.default.createElement("input", { onChange: handleInput, value: inputText, className: "w-full h-8 outline-none" }),
-                react_1.default.createElement("button", { onClick: handleSend },
+                react_1.default.createElement("input", { id: "user-input", onChange: handleInput, value: inputText, className: "w-full h-8 outline-none" }),
+                react_1.default.createElement("button", { id: "send-button", onClick: handleSend },
                     react_1.default.createElement("img", { src: send_svg_1.default }))))));
 };
 exports.Home = Home;

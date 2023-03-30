@@ -19,6 +19,7 @@ export const ZundamonVoice = async (text: string) => {
     const gainNode = audioContext.createGain();
     gainNode.gain.value = 5;
     gainNode.connect(audioContext.destination);
+
     const source = audioContext.createBufferSource();
     source.buffer = buffer;
     source.connect(gainNode);
