@@ -4,11 +4,11 @@
 
 1. Electron + React + Typescript
 
-    次のドキュメントに従う。[Electron公式ドキュメント](https://www.electronforge.io/guides/framework-integration/react-with-typescript)
+    [Electron公式ドキュメント](https://www.electronforge.io/guides/framework-integration/react-with-typescript)に従う。
 
 2. += TailwindCSS
 
-    1. 次のドキュメントに従う。[偉い人が作ってくれた記事](https://reactfocus.dev/tailwindcss-react-typescript-in-an-electron-app)
+    1. [偉い人が作ってくれた記事](https://reactfocus.dev/tailwindcss-react-typescript-in-an-electron-app)に従う。
     2. `src/index.css`を`src/styles/globals.css`に移動させる。
     3. `src/app.tsx`に`import './styles/globals.css';`を追加する。
 
@@ -69,3 +69,7 @@
     **補足**
 
     `spawn("npm", ["run", "start:server"], {...})`: あるプロセスを親として子プロセスを紐つけることができる。たぶん、これで一斉に終了させているんだと思う。
+
+## Electron APIを使うには
+
+このライブラリ構成だとメインとレンダラーが厳密に分離されている。そのため`src/preload.ts`を介してメインプロセスのAPIをレンダラーに部分的に開放する。[Electron公式ドキュメント](https://www.electronjs.org/ja/docs/latest/tutorial/context-isolation)に従う。
