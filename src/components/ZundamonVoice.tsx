@@ -1,5 +1,5 @@
 export const ZundamonVoice = async (text: string) => {
-  const response_query = await fetch(`http://localhost:50021/audio_query?text=${text}&speaker=1`, {
+  const response_query = await fetch(`http://127.0.0.1:50021/audio_query?text=${text}&speaker=1`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -7,7 +7,7 @@ export const ZundamonVoice = async (text: string) => {
   });
   const data_query = await response_query.json();
 
-  const response_audio = await fetch("http://localhost:50021/synthesis?speaker=1", {
+  const response_audio = await fetch("http://127.0.0.1:50021/synthesis?speaker=1", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

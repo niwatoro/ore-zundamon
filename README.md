@@ -73,3 +73,24 @@
 ## Electron APIを使うには
 
 このライブラリ構成だとメインとレンダラーが厳密に分離されている。そのため`src/preload.ts`を介してメインプロセスのAPIをレンダラーに部分的に開放する。[Electron公式ドキュメント](https://www.electronjs.org/ja/docs/latest/tutorial/context-isolation)に従う。
+
+1. `src/index.ts`でElectron APIを使う関数を定義
+2. `src/index.ts`の`app.on("ready", ()=>{})`に以下の関数を追加する。
+
+    ```typescript
+    ipcMain.handle("do-a-thing", doAThing);
+    ```
+
+3. `src/preload.ts`で`contextBridge`を使ってメインプロセスのAPIをレンダラーに部分的に開放
+
+    ```typescript
+    contextBridge.exposeInMainWorld("myAPI", {
+        doAThing: () => ipcRenderer.invoke("do-a-thing"),
+    });
+    ```
+
+4. `src/components/MyCompononet.tsx`で呼び出す。
+
+    ```typescript
+    const result = await window.myAPI.doAThing();
+    ```
