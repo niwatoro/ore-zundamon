@@ -1,4 +1,6 @@
-export interface IMyAPI {}
+export interface IMyAPI {
+  getFocusedWindow: () => Promise<string>;
+}
 
 declare global {
   interface Window {
