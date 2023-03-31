@@ -12,8 +12,6 @@ export const Home: FC = () => {
   };
 
   const handleSend = async () => {
-    const screenshot = await window.myAPI.getScreenshot();
-
     const sentences = inputText.split(/、|。|！|？|！？|？！/);
     for (const sentence of sentences) {
       await ZundamonVoice(sentence);
@@ -23,7 +21,7 @@ export const Home: FC = () => {
   };
 
   return (
-    <div className="w-screen h-screen overflow-hidden">
+    <div className="w-screen h-screen overflow-hidden absolute">
       <div className="flex justify-end w-full h-full absolute -z-10">
         <img className="object-contain" src={normal} alt="zundamon" />
       </div>

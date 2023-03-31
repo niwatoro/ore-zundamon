@@ -15,20 +15,6 @@ const electron_1 = require("electron");
 if (require("electron-squirrel-startup")) {
     electron_1.app.quit();
 }
-const getScreenText = () => __awaiter(void 0, void 0, void 0, function* () {
-    const sources = yield electron_1.desktopCapturer.getSources({ types: ["screen"] });
-    const source = sources[0];
-    // const worker = await createWorker({
-    //   logger: (m) => console.log(m),
-    // });
-    // worker.load();
-    // worker.loadLanguage("eng");
-    // worker.initialize("eng");
-    // const result = await worker.recognize(source.thumbnail.toDataURL());
-    // const data = result.data;
-    // return data.text;
-    return "";
-});
 const startServer = () => {
     const server = (0, child_process_1.spawn)("npm", ["run", "start:server"], {
         shell: true,
@@ -47,11 +33,11 @@ const startServer = () => {
 const createWindow = () => {
     // const isMac = process.platform === "darwin";
     // const isWindows = process.platform === "win32";
-    const { width, height } = electron_1.screen.getPrimaryDisplay().workAreaSize;
+    const { width: screenWidth, height: screenHeight } = electron_1.screen.getPrimaryDisplay().size;
     const windowWidth = 400;
     const windowHeight = 400;
-    const x = width - windowWidth;
-    const y = height - windowHeight;
+    const x = screenWidth - windowWidth;
+    const y = screenHeight - windowHeight;
     // Create the browser window.
     const mainWindow = new electron_1.BrowserWindow({
         height: 400,
@@ -77,14 +63,17 @@ const createWindow = () => {
     // and load the index.html of the app.
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
+    electron_1.desktopCapturer.getSources({ types: ["screen"] }).then((sources) => {
+        const source = sources[0];
+        mainWindow.webContents.send("SET-SOURCE", source.id);
+    });
 };
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 electron_1.app.on("ready", () => __awaiter(void 0, void 0, void 0, function* () {
     startServer();
-    electron_1.ipcMain.handle("get-screen-text", getScreenText);
     createWindow();
 }));
 // Quit when all windows are closed, except on macOS. There, it's common

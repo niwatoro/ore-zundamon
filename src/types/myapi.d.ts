@@ -1,6 +1,4 @@
-export interface IMyAPI {
-  getScreenshot: () => Promise<string>;
-}
+export interface IMyAPI {}
 
 declare global {
   interface Window {

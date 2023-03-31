@@ -43,8 +43,6 @@ const Home = () => {
         setInputText(e.target.value);
     };
     const handleSend = () => __awaiter(void 0, void 0, void 0, function* () {
-        const screenText = yield window.myAPI.getScreenText();
-        setZundamonText(screenText);
         const sentences = inputText.split(/、|。|！|？|！？|？！/);
         for (const sentence of sentences) {
             yield (0, ZundamonVoice_1.ZundamonVoice)(sentence);
@@ -52,7 +50,10 @@ const Home = () => {
         }
         setInputText("");
     });
-    return (react_1.default.createElement("div", { className: "w-screen h-screen overflow-hidden" },
+    (0, react_1.useEffect)(() => {
+        window.myAPI.setSource();
+    }, []);
+    return (react_1.default.createElement("div", { className: "w-screen h-screen overflow-hidden absolute" },
         react_1.default.createElement("div", { className: "flex justify-end w-full h-full absolute -z-10" },
             react_1.default.createElement("img", { className: "object-contain", src: normal_png_1.default, alt: "zundamon" })),
         react_1.default.createElement("div", { className: "h-full flex flex-col justify-end w-full" },
