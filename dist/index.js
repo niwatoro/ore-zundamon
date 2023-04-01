@@ -34,6 +34,7 @@ const startServer = () => {
         console.log(`child process exited with code ${code}`);
     });
 };
+let mainWindow = null;
 const createWindow = () => {
     // const isMac = process.platform === "darwin";
     // const isWindows = process.platform === "win32";
@@ -43,7 +44,7 @@ const createWindow = () => {
     const x = screenWidth - windowWidth;
     const y = screenHeight - windowHeight;
     // Create the browser window.
-    const mainWindow = new electron_1.BrowserWindow({
+    mainWindow = new electron_1.BrowserWindow({
         height: 400,
         width: 400,
         // transparent: true,
@@ -62,6 +63,8 @@ const createWindow = () => {
         skipTaskbar: true,
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+            contextIsolation: true,
+            nodeIntegration: false,
         },
     });
     // and load the index.html of the app.
@@ -94,4 +97,13 @@ electron_1.app.on("activate", () => {
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+electron_1.ipcMain.on("screenshot:capture", (value) => {
+    electron_1.desktopCapturer.getSources({ types: ["window"], thumbnailSize: { width: 1920, height: 1080 } }).then((sources) => __awaiter(void 0, void 0, void 0, function* () {
+        let image = sources[0].thumbnail.toDataURL();
+        console.log(electron_1.systemPreferences.getMediaAccessStatus("screen"));
+        electron_1.systemPreferences.askForMediaAccess("camera");
+        console.log(sources.forEach((source) => console.log(source.thumbnail.isEmpty())));
+        mainWindow.webContents.send("screenshot:captured", image);
+    }));
+});
 //# sourceMappingURL=index.js.map
