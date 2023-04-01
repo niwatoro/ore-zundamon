@@ -89,3 +89,7 @@ typings/
 out/
 
 voicevox/
+
+# output files
+dist/
+out/
