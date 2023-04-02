@@ -14,11 +14,6 @@ export const mainConfig: Configuration = {
   },
   resolve: {
     extensions: [".js", ".ts", ".jsx", ".tsx", ".css", ".json"],
-    fallback: {
-      child_process: false,
-      fs: false,
-      crypto: false,
-    },
   },
   target: "electron-main",
 };
