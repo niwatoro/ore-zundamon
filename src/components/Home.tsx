@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import normal from "../images/normal.png";
 import send from "../images/send.svg";
 import { ZundamonVoice } from "./ZundamonVoice";
@@ -19,6 +19,8 @@ export const Home: FC = () => {
     }
     setInputText("");
   };
+
+  useEffect(() => {}, []);
 
   return (
     <div className="w-screen h-screen overflow-hidden absolute">

@@ -4,5 +4,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("myAPI", {
-  getFocusedWindow: () => ipcRenderer.invoke("get-focused-window"),
+  getFocusedWindowName: () => ipcRenderer.invoke("get-focused-window-name"),
+  captureFocusedWindow: () => ipcRenderer.invoke("capture-focused-window"),
 });
