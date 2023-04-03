@@ -22,9 +22,7 @@ export const Home: FC = () => {
 
   const recognizeText = async () => {};
 
-  useEffect(() => {
-    recognizeText();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="w-screen h-screen overflow-hidden absolute">

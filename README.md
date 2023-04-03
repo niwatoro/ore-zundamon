@@ -113,3 +113,13 @@
     ```
 
 4. あとはAPIで`Render`プロセスに露出させれば良い。
+
+## 外部フォルダを追加する
+
+`forge.config.ts`に以下の内容を追加する。
+
+```typescript
+packagerConfig: {
+    extraResource: ["voicevox"],
+},
+```

@@ -1,8 +1,7 @@
-import { NativeImage } from "electron";
-
 export interface IMyAPI {
   getFocusedWindowName: () => Promise<string>;
-  captureFocusedWindow: () => NativeImage;
+  recognizeText: (image: Buffer) => Promise<string>;
+  recognizeScreenText: () => Promise<string>;
 }
 
 declare global {
