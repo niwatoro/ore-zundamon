@@ -6,8 +6,5 @@ export interface IMyAPI {
 declare global {
   interface Window {
     myAPI: IMyAPI;
-    Tesseract: {
-      recognize: (image: Blob) => Promise<string>;
-    };
   }
 }

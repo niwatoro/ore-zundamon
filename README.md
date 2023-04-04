@@ -97,22 +97,21 @@
 
 ## テキスト画像認識する
 
-~~1. GoogleやYou.comで探しても埒が明かないので、[Openbase](https://openbase.com/categories/js/best-nodejs-ocr-libraries?vs=tesseract.js%2Ctextract%2Cocrad.js)で探す。~~
-~~2. Copilotの補完にも出ていた`node-tesseract-ocr`にする。~~
-~~3. `Main`プロセスで次のように呼び出す。~~
-    ```typescript
-    tesseract
-        .recognize(__dirname + "/../../src/images/eng_bw.png", { lang: "eng" })
-        .then((text) => {
-            dialog.showErrorBox("Error", text);
-        })
-        .catch((error) => {
-            dialog.showErrorBox("Error", error.message);
-        });
-```
-~~4. あとはAPIで`Render`プロセスに露出させれば良い。~~
+1. npmで[Tesseract.js](https://tesseract.projectnaptha.com/)をインストールする。
 
-どれもエラーが出るのでクライアントからTesseract.jsを叩きます。詳しくは[このQiitaの記事](https://qiita.com/Nao-Taka/items/ea8c449e2a7730ea8c2c)を参照。
+    ```bash
+    npm install tesseract.js
+    ```
+
+2. **Renderer側**で使う。
+
+    ```typescript
+    import Tesseract from "tesseract.js";
+
+    const result = await Tesseract.recognize(image, "jpn");
+    ```
+
+    補足：困ったら公式ドキュメントを見よう。[Tesseract.jsのドキュメント（Github）](https://github.com/naptha/tesseract.js/)。
 
 ## 外部フォルダを追加する
 

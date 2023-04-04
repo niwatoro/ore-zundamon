@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
+import Tesseract from "tesseract.js";
 import normal from "../images/normal.png";
 import send from "../images/send.svg";
 import { ZundamonVoice } from "./ZundamonVoice";
@@ -22,19 +23,17 @@ export const Home: FC = () => {
 
   const recognizeText: () => Promise<string> = async () => {
     const image = await window.myAPI.captureFocusedWindow();
-    const array = new Uint8Array(image);
-    const blob = new Blob([array], { type: "image/png" });
-    try {
-      const text = await window.Tesseract.recognize(blob);
-      return text.toString();
-    } catch (e) {
-      console.error(e);
-    }
+
+    const result = await Tesseract.recognize(image, "jpn", {
+      logger: (m) => console.log(m),
+    });
+    const text = result.data.text;
+    return text;
   };
 
   useEffect(() => {
     recognizeText().then((text) => {
-      setZundamonText(text);
+      console.log(text);
     });
   }, []);
 
