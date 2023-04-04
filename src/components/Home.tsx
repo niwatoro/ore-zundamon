@@ -20,9 +20,23 @@ export const Home: FC = () => {
     setInputText("");
   };
 
-  const recognizeText = async () => {};
+  const recognizeText: () => Promise<string> = async () => {
+    const image = await window.myAPI.captureFocusedWindow();
+    const array = new Uint8Array(image);
+    const blob = new Blob([array], { type: "image/png" });
+    try {
+      const text = await window.Tesseract.recognize(blob);
+      return text.toString();
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    recognizeText().then((text) => {
+      setZundamonText(text);
+    });
+  }, []);
 
   return (
     <div className="w-screen h-screen overflow-hidden absolute">
