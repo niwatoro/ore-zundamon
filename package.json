@@ -54,12 +54,14 @@
     "autoprefixer": "^10.4.14",
     "child_process": "^1.0.2",
     "electron-squirrel-startup": "^1.0.0",
+    "jimp": "^0.22.7",
     "node-tesseract-ocr": "^2.2.1",
     "path": "^0.12.7",
     "postcss": "^8.4.21",
     "postcss-loader": "^7.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "sharp": "^0.32.0",
     "tesseract.js": "^4.0.3"
   }
 }

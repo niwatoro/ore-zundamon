@@ -21,18 +21,20 @@ export const Home: FC = () => {
     setInputText("");
   };
 
-  const recognizeText: () => Promise<string> = async () => {
-    const image = await window.myAPI.captureFocusedWindow();
-
-    const result = await Tesseract.recognize(image, "jpn", {
+  const recognizeScreenText: () => Promise<string> = async () => {
+    const buffer = await window.myAPI.captureFocusedWindow();
+    const filteredBuffer = await window.myAPI.preprocessImage(buffer);
+    const result = await Tesseract.recognize(filteredBuffer, "jpn", {
       logger: (m) => console.log(m),
+      langPath: "https://tessdata.projectnaptha.com/4.0.0_best/jpn.traineddata.gz",
     });
+    console.log(result);
     const text = result.data.text;
     return text;
   };
 
   useEffect(() => {
-    recognizeText().then((text) => {
+    recognizeScreenText().then((text) => {
       console.log(text);
     });
   }, []);
