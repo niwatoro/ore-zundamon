@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import Tesseract from "tesseract.js";
+import { generateVoicevoxVoice } from "../api/generate-voicevox-voice";
 import normal from "../images/normal.png";
 import send from "../images/send.svg";
-import { ZundamonVoice } from "./ZundamonVoice";
 
 export const Home: FC = () => {
   const [inputText, setInputText] = useState("");
@@ -15,7 +15,7 @@ export const Home: FC = () => {
   const handleSend = async () => {
     const sentences = inputText.split(/、|。|！|？|！？|？！/);
     for (const sentence of sentences) {
-      await ZundamonVoice(sentence);
+      await generateVoicevoxVoice(sentence);
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
     setInputText("");
