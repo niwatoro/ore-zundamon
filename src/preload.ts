@@ -7,4 +7,5 @@ contextBridge.exposeInMainWorld("myAPI", {
   getFocusedWindowName: () => ipcRenderer.invoke("get-focused-window-name"),
   captureFocusedWindow: () => ipcRenderer.invoke("capture-focused-window"),
   preprocessImage: (buffer: Buffer) => ipcRenderer.invoke("preprocess-image", buffer),
+  openPromptFile: () => ipcRenderer.invoke("open-prompt-file"),
 });

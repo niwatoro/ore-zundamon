@@ -55,6 +55,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "jimp": "^0.22.7",
     "node-tesseract-ocr": "^2.2.1",
+    "openai": "^3.2.1",
     "path": "^0.12.7",
     "postcss": "^8.4.21",
     "postcss-loader": "^7.1.0",

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import Tesseract from "tesseract.js";
+import { fetchOpenAiApi } from "../api/fetch-openai-api";
 import { generateVoicevoxVoice } from "../api/generate-voicevox-voice";
 import normal from "../images/normal.png";
 import send from "../images/send.svg";
@@ -37,6 +38,7 @@ export const Home: FC = () => {
     recognizeScreenText().then((text) => {
       console.log(text);
     });
+    fetchOpenAiApi("");
   }, []);
 
   return (
