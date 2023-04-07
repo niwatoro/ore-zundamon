@@ -6,6 +6,7 @@ import happy from "../images/happy.png";
 import normal from "../images/normal.png";
 import sad from "../images/sad.png";
 import send from "../images/send.svg";
+import thinking from "../images/thinking.png";
 
 export const Home: FC = () => {
   const [inputText, setInputText] = useState("");
@@ -17,6 +18,9 @@ export const Home: FC = () => {
   };
 
   const handleSend = async () => {
+    setZundamonImage(thinking);
+
+    setInputText("");
     const response = await window.myAPI.fetchOpenAiApi(inputText);
     switch (response.emotion) {
       case "fun":
@@ -39,7 +43,6 @@ export const Home: FC = () => {
       await generateVoicevoxVoice(sentence);
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
-    setInputText("");
   };
 
   useEffect(() => {

@@ -22,10 +22,18 @@ export const fetchOpenAiApi: (prompt: string) => Promise<OpenAiReponse> = async 
         role: "user",
         content: prompt,
       },
+      {
+        role: "assistant",
+        content: '{"current_emotion":"',
+      },
     ],
+    top_p: 0.9,
   });
-  const rawText = response.data.choices[0].message.content;
-  const emotion = rawText.match(/current_emotion: (\w+)/)?.[1] as "joyful" | "fun" | "sad" | "angry";
-  const text = rawText.replace(`current_emotion: ${emotion}`, "");
-  return { text: text, emotion: emotion };
+  try {
+    const resJson = JSON.parse('{"current_emotion":"' + response.data.choices[0].message.content);
+    console.log(resJson);
+    return { emotion: resJson.current_emotion, text: resJson.zundamon_reply.replace(/「|」/g, "") };
+  } catch (e) {
+    return { text: response.data.choices[0].message.content, emotion: "fun" };
+  }
 };
