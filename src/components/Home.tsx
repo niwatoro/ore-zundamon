@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
-import Tesseract from "tesseract.js";
-import { fetchOpenAiApi } from "../api/fetch-openai-api";
 import { generateVoicevoxVoice } from "../api/generate-voicevox-voice";
+import { recognizeScreenText } from "../api/recognize-screen-text";
 import normal from "../images/normal.png";
 import send from "../images/send.svg";
 
@@ -14,7 +13,10 @@ export const Home: FC = () => {
   };
 
   const handleSend = async () => {
-    const sentences = inputText.split(/、|。|！|？|！？|？！/);
+    const response = await window.myAPI.fetchOpenAiApi(inputText);
+    setZundamonText(response);
+
+    const sentences = response.split(/、|。|！|？|！？|？！/);
     for (const sentence of sentences) {
       await generateVoicevoxVoice(sentence);
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -22,23 +24,10 @@ export const Home: FC = () => {
     setInputText("");
   };
 
-  const recognizeScreenText: () => Promise<string> = async () => {
-    const buffer = await window.myAPI.captureFocusedWindow();
-    const filteredBuffer = await window.myAPI.preprocessImage(buffer);
-    const result = await Tesseract.recognize(filteredBuffer, "jpn", {
-      logger: (m) => console.log(m),
-      langPath: "https://tessdata.projectnaptha.com/4.0.0_best/jpn.traineddata.gz",
-    });
-    console.log(result);
-    const text = result.data.text;
-    return text;
-  };
-
   useEffect(() => {
     recognizeScreenText().then((text) => {
       console.log(text);
     });
-    fetchOpenAiApi("");
   }, []);
 
   return (

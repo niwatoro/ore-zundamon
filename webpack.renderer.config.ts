@@ -3,6 +3,12 @@ import type { Configuration } from "webpack";
 import { plugins } from "./webpack.plugins";
 import { rules } from "./webpack.rules";
 
+// load txt files (in src/prompts/*.txt)
+rules.push({
+  test: /\.txt$/i,
+  use: "raw-loader",
+});
+
 // load png/svg images (in src/images/*.png/svg)
 rules.push({
   test: /\.(png|svg|jpg|jpeg|gif)$/i,

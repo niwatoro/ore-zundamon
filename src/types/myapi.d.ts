@@ -2,7 +2,7 @@ export interface IMyAPI {
   getFocusedWindowName: () => Promise<string>;
   captureFocusedWindow: () => Promise<Buffer>;
   preprocessImage: (buffer: Buffer) => Promise<Buffer>;
-  openPromptFile: () => Promise<string>;
+  fetchOpenAiApi: (prompt: string) => Promise<string>;
 }
 
 declare global {
